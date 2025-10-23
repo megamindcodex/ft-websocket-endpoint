@@ -37,7 +37,7 @@ module.exports = (io, app) => {
     try {
       const { type, sender, receiver, amount } = req.body;
 
-      console.log(`webhook request received: ${sender}`)
+      console.log(`webhook request received from: ${sender} to ${receiver}`)
 
       const clientSocketId = clients[receiver]
       // console.log(clientSocketId)
@@ -45,7 +45,7 @@ module.exports = (io, app) => {
       if (type === "credit-alert") {
 
         notificationNamespace.to(clientSocketId).emit("credit-alert", { message: `${sender} just credit you a sum of $${amount}` })
-        return res.status(200).json({ message: " credit-alert push notification successfully" })
+        return res.status(200).json({ message: `credit-alert push notification pushed successfully to ${receiver}` })
       }
 
     } catch (err) {

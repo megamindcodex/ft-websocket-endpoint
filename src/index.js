@@ -15,7 +15,22 @@ app.use(bodyParser.json());
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:4000, https://ft-endpoint.onrender.com", "https://test-fintech.netlify.app"],
+    origin: [
+      // origin for development ---for star-link router
+      "http://192.168.2.121:4000", //ft-endpoint 
+      "http://192.168.2.121:5173", //ft-client
+
+
+      // origin for development  ---for lucky phone router
+      "http://192.168.127.103:4000", //ft-endpoint
+      "http://192.168.127.103:5173", //ft-client
+
+      // origin for production
+      "https://ft-endpoint.onrender.com", //ft-endpoint
+      "https://test-fintech.netlify.app" //ft-client
+
+    ],
+
     methods: ["Get", "POST", "PUT", "DELETE"],
     allowedHeaders: ["content-type", "Authorization"],
   },
@@ -43,8 +58,8 @@ connectNamespaces();
 
 const startServer = async () => {
   try {
-    httpServer.listen(PORT, () => {
-      console.log(`server listening on port ${PORT} http://localhost:${PORT}`);
+    httpServer.listen(PORT, "0.0.0.0", () => {
+      console.log(`server listening on port ${PORT} http://0.0.0.0:${PORT}`);
     });
     // console.log(httpServer)
 
